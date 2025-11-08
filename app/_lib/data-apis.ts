@@ -8,6 +8,7 @@ export type Service = {
   image: string;
 };
 
+// Get All Data
 async function apiFetch<T>(endpoint: string): Promise<T> {
   const url = `${process.env.BASE_URL}${endpoint}`;
 
@@ -24,4 +25,16 @@ async function apiFetch<T>(endpoint: string): Promise<T> {
 
 export async function getServices(): Promise<Service[]> {
   return apiFetch<Service[]>("/services");
+}
+
+// Get Data By Id
+async function apiFetchById<T>(
+  resource: string,
+  id: string | number,
+): Promise<T> {
+  return apiFetch<T>(`${resource}/${id}`);
+}
+
+export async function getServiceById(id: string | number): Promise<Service> {
+  return apiFetchById<Service>("/services", String(id));
 }
