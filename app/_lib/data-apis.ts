@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 export type Service = {
   id: string;
   business_id: number;
@@ -15,6 +17,7 @@ async function apiFetch<T>(endpoint: string): Promise<T> {
   const response = await fetch(url);
 
   if (!response.ok) {
+    if (response.status === 404) notFound();
     const errorMessage = `خطا در دریافت داده‌ها از ${endpoint}. کد: ${response.status}`;
     throw new Error(errorMessage);
   }
