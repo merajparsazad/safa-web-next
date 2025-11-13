@@ -1,14 +1,22 @@
 import { Suspense } from "react";
-import ServiceList from "../_components/ServiceList";
-import Spinner from "../_components/Spinner";
+import ServiceList from "@/app/_components/ServiceList";
+import Spinner from "@/app/_components/Spinner";
+import Filter from "@/app/_components/Filter";
 
+// As i use searchParams, the page is already dynamic
 export const revalidate = 300;
 
 export const metadata = {
   title: "خدمات",
 };
 
-export default async function Services() {
+type ServicesPageProps = {
+  searchParams?: { price?: string };
+};
+
+export default async function Services({ searchParams }: ServicesPageProps) {
+  const filter = searchParams?.price ?? "all";
+
   return (
     <div>
       <h1 className="mb-5 text-4xl font-medium text-indigo-400">
@@ -22,8 +30,12 @@ export default async function Services() {
         مدیریت کرده و تجربه‌ای سریع و کارآمد برای مشتریان فراهم آورند.
       </p>
 
-      <Suspense fallback={<Spinner />}>
-        <ServiceList />
+      <div className="mb-5 flex justify-start">
+        <Filter />
+      </div>
+
+      <Suspense fallback={<Spinner />} key={filter}>
+        <ServiceList filter={filter} />
       </Suspense>
     </div>
   );
