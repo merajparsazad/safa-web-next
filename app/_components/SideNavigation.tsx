@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CalendarDaysIcon,
   HomeIcon,
@@ -6,6 +8,7 @@ import {
 import SignOutButton from "./SignOutButton";
 import Link from "next/link";
 import { JSX } from "react";
+import { usePathname } from "next/navigation";
 
 type NavLinks = {
   name: string;
@@ -32,13 +35,15 @@ const navLinks: NavLinks[] = [
 ];
 
 function SideNavigation() {
+  const pathname = usePathname() ?? "";
+
   return (
     <nav className="border-e border-gray-700">
       <ul className="flex h-full flex-col gap-2 text-lg">
         {navLinks.map((link) => (
           <li key={link.name}>
             <Link
-              className="flex items-center gap-4 px-5 py-3 font-semibold text-gray-200 transition-colors hover:bg-gray-900 hover:text-gray-100"
+              className={`flex items-center gap-4 px-5 py-3 font-semibold text-gray-200 transition-colors hover:bg-gray-900 hover:text-gray-100 ${pathname === link.href ? "bg-gray-900" : ""}`}
               href={link.href}
             >
               {link.icon}

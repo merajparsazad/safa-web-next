@@ -1,3 +1,4 @@
+import TextExpander from "@/app/_components/TextExpander";
 import { getServiceById } from "@/app/_lib/data-apis";
 import { BanknotesIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -54,7 +55,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
           <div className="flex flex-col gap-2">
             <h3 className="text-xl font-semibold">توضیحات</h3>
-            <p className="text-lg text-gray-300">{description}</p>
+            <TextExpander>{description}</TextExpander>
           </div>
         </div>
       </div>
